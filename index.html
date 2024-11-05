@@ -28,6 +28,9 @@
             color: #1e88e5;
             text-align: center;
         }
+        .form-section {
+            margin-top: 15px;
+        }
         /* Labels and inputs */
         .form-container label {
             font-weight: bold;
@@ -67,24 +70,45 @@
     <div class="form-container">
         <h2>Client Inquiry Form</h2>
         <form action="/save-inquiry" method="POST">
-            <label for="client-name">Client Name:</label>
-            <input type="text" id="client-name" name="client-name" required>
+            <div class="form-section">
+                <h3>Client Information</h3>
+                <label for="client-name">Client Name:</label>
+                <input type="text" id="client-name" name="client-name" required>
+
+                <label for="phone-number">Phone Number:</label>
+                <input type="text" id="phone-number" name="phone-number" required>
+            </div>
             
-            <label for="phone-number">Phone Number:</label>
-            <input type="text" id="phone-number" name="phone-number" required>
-            
-            <label for="client-inquiry">Client Inquiry:</label>
-            <textarea id="client-inquiry" name="client-inquiry" required></textarea>
-            
-            <label for="booking-date">Booking Date:</label>
-            <input type="date" id="booking-date" name="booking-date" required>
-            
-            <label for="conversion">Conversion (Booked or Not):</label>
-            <select id="conversion" name="conversion" required>
-                <option value="Booked">Booked</option>
-                <option value="Not Booked">Not Booked</option>
-            </select>
-            
+            <div class="form-section">
+                <h3>Booking Details</h3>
+                <label for="client-inquiry">Client Inquiry:</label>
+                <textarea id="client-inquiry" name="client-inquiry" required></textarea>
+
+                <label for="booking-date">Booking Date:</label>
+                <input type="date" id="booking-date" name="booking-date" required>
+
+                <label for="resolution">Resolution:</label>
+                <textarea id="resolution" name="resolution"></textarea>
+            </div>
+
+            <div class="form-section">
+                <h3>Follow-up</h3>
+                <label for="date-called">Date Client Was Called:</label>
+                <input type="date" id="date-called" name="date-called">
+
+                <label for="client-feedback">Client Feedback:</label>
+                <textarea id="client-feedback" name="client-feedback"></textarea>
+            </div>
+
+            <div class="form-section">
+                <h3>Conversion</h3>
+                <label for="conversion">Conversion (Booked or Not):</label>
+                <select id="conversion" name="conversion" required>
+                    <option value="Booked">Booked</option>
+                    <option value="Not Booked">Not Booked</option>
+                </select>
+            </div>
+
             <button type="submit">Submit Inquiry</button>
         </form>
     </div>
