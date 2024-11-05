@@ -1,91 +1,92 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Inquiry Form</title>
     <style>
+        /* Global styles */
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f4f8;
         }
+        /* Form container */
         .form-container {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
         }
+        .form-container h2 {
+            color: #1e88e5;
+            text-align: center;
+        }
+        /* Labels and inputs */
         .form-container label {
-            display: block;
             font-weight: bold;
             margin-top: 10px;
+            color: #333;
+            display: block;
         }
-        .form-container input,
+        .form-container input[type="text"],
+        .form-container input[type="date"],
         .form-container textarea,
         .form-container select {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-top: 5px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+            border-radius: 5px;
+            font-size: 1em;
         }
+        /* Submit button */
         .form-container button {
-            width: 100%;
+            background-color: #4caf50;
+            color: white;
             padding: 10px;
-            margin-top: 20px;
-            background-color: #007bff;
-            color: #ffffff;
+            width: 100%;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 5px;
+            font-size: 1.1em;
             cursor: pointer;
+            margin-top: 20px;
         }
         .form-container button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-
-<div class="form-container">
-    <form>
-        <label for="client-name">Client Name:</label>
-        <input type="text" id="client-name" name="client-name">
-
-        <label for="phone-number">Phone Number:</label>
-        <input type="text" id="phone-number" name="phone-number">
-
-        <label for="client-inquiry">Client Inquiry:</label>
-        <textarea id="client-inquiry" name="client-inquiry" rows="3"></textarea>
-
-        <label for="booking-date">Booking Date:</label>
-        <input type="date" id="booking-date" name="booking-date">
-
-        <label for="client-resolution">Client Resolution:</label>
-        <textarea id="client-resolution" name="client-resolution" rows="3"></textarea>
-
-        <label for="date-called">Date Client Was Called:</label>
-        <input type="date" id="date-called" name="date-called">
-
-        <label for="client-feedback">Client Feedback:</label>
-        <textarea id="client-feedback" name="client-feedback" rows="3"></textarea>
-
-        <label for="conversion">Conversion (Booked or Not):</label>
-        <select id="conversion" name="conversion">
-            <option value="booked">Booked</option>
-            <option value="not-booked">Not Booked</option>
-        </select>
-
-        <button type="submit">Add Inquiry</button>
-    </form>
-</div>
-
+    <div class="form-container">
+        <h2>Client Inquiry Form</h2>
+        <form action="/save-inquiry" method="POST">
+            <label for="client-name">Client Name:</label>
+            <input type="text" id="client-name" name="client-name" required>
+            
+            <label for="phone-number">Phone Number:</label>
+            <input type="text" id="phone-number" name="phone-number" required>
+            
+            <label for="client-inquiry">Client Inquiry:</label>
+            <textarea id="client-inquiry" name="client-inquiry" required></textarea>
+            
+            <label for="booking-date">Booking Date:</label>
+            <input type="date" id="booking-date" name="booking-date" required>
+            
+            <label for="conversion">Conversion (Booked or Not):</label>
+            <select id="conversion" name="conversion" required>
+                <option value="Booked">Booked</option>
+                <option value="Not Booked">Not Booked</option>
+            </select>
+            
+            <button type="submit">Submit Inquiry</button>
+        </form>
+    </div>
 </body>
 </html>
