@@ -1,4 +1,3 @@
-index_html_content = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,101 +6,128 @@ index_html_content = """
     <title>Client Inquiry Form</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            color: #333;
+            font-family: 'Arial', sans-serif;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #f9f9f9;
         }
-        .container {
-            width: 100%;
-            max-width: 600px;
+        .form-container {
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            transition: transform 0.3s ease;
         }
-        h1 {
-            color: #4CAF50;
-            text-align: center;
+        .form-container:hover {
+            transform: translateY(-5px);
         }
-        label {
-            font-weight: bold;
-            margin-top: 10px;
+        .form-container label {
             display: block;
+            font-weight: bold;
+            margin-top: 12px;
+            color: #333;
         }
-        input[type="text"], input[type="date"], textarea, select {
+        .form-container input,
+        .form-container textarea,
+        .form-container select {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
         }
-        button {
+        .form-container input:focus,
+        .form-container textarea:focus,
+        .form-container select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .form-container button {
             width: 100%;
             padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .success {
-            text-align: center;
-            color: #4CAF50;
-            font-size: 18px;
-            padding: 20px;
-        }
-        .link {
-            text-align: center;
             margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        .link a {
-            color: #4CAF50;
-            text-decoration: none;
+        .form-container button:hover {
+            background-color: #0056b3;
         }
-        .link a:hover {
-            text-decoration: underline;
+        .form-container button:active {
+            background-color: #004085;
+        }
+        .form-container textarea {
+            resize: vertical;
+        }
+        .form-container input[type="text"] {
+            text-transform: capitalize;
+        }
+        .form-container .input-group {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Client Inquiry Form</h1>
-        <form action="/save-inquiry" method="POST">
+
+<div class="form-container">
+    <form>
+        <div class="input-group">
             <label for="client-name">Client Name:</label>
             <input type="text" id="client-name" name="client-name" required>
+        </div>
 
+        <div class="input-group">
             <label for="phone-number">Phone Number:</label>
             <input type="text" id="phone-number" name="phone-number" required>
+        </div>
 
+        <div class="input-group">
             <label for="client-inquiry">Client Inquiry:</label>
-            <textarea id="client-inquiry" name="client-inquiry" rows="4" required></textarea>
+            <textarea id="client-inquiry" name="client-inquiry" rows="3" required></textarea>
+        </div>
 
+        <div class="input-group">
             <label for="booking-date">Booking Date:</label>
             <input type="date" id="booking-date" name="booking-date" required>
+        </div>
 
+        <div class="input-group">
             <label for="client-resolution">Client Resolution:</label>
-            <textarea id="client-resolution" name="client-resolution" rows="4"></textarea>
+            <textarea id="client-resolution" name="client-resolution" rows="3" required></textarea>
+        </div>
 
+        <div class="input-group">
             <label for="date-called">Date Client Was Called:</label>
-            <input type="date" id="date-called" name="date-called">
+            <input type="date" id="date-called" name="date-called" required>
+        </div>
 
+        <div class="input-group">
             <label for="client-feedback">Client Feedback:</label>
-            <textarea id="client-feedback" name="client-feedback" rows="4"></textarea>
+            <textarea id="client-feedback" name="client-feedback" rows="3" required></textarea>
+        </div>
 
+        <div class="input-group">
             <label for="conversion">Conversion (Booked or Not):</label>
             <select id="conversion" name="conversion" required>
-                <option value="Booked">Booked</option>
-                <option value="Not Booked">Not Booked</option>
+                <option value="booked">Booked</option>
+                <option value="not-booked">Not Booked</option>
             </select>
+        </div>
 
-            <but
+        <button type="submit">Add Inquiry</button>
+    </form>
+</div>
+
+</body>
+</html>
