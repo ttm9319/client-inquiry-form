@@ -7,30 +7,39 @@
     <style>
         /* Global styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f4f7;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
+
         /* Form container */
         .form-container {
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
             width: 90%;
+            transition: all 0.3s ease;
         }
+
+        /* Header */
         .form-container h2 {
-            color: #1e88e5;
+            color: #2196F3;
             text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
         }
+
+        /* Form Section */
         .form-section {
-            margin-top: 15px;
+            margin-bottom: 20px;
         }
+
         /* Labels and inputs */
         .form-container label {
             font-weight: bold;
@@ -38,31 +47,67 @@
             color: #333;
             display: block;
         }
+
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container textarea,
         .form-container select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 1em;
+            transition: border-color 0.3s ease;
         }
+
+        .form-container input[type="text"]:focus,
+        .form-container input[type="date"]:focus,
+        .form-container textarea:focus,
+        .form-container select:focus {
+            border-color: #2196F3;
+            outline: none;
+        }
+
         /* Submit button */
         .form-container button {
-            background-color: #4caf50;
+            background-color: #4CAF50;
             color: white;
-            padding: 10px;
+            padding: 14px;
             width: 100%;
             border: none;
             border-radius: 5px;
-            font-size: 1.1em;
+            font-size: 1.2em;
             cursor: pointer;
             margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
+
         .form-container button:hover {
             background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                max-width: 90%;
+            }
+
+            .form-container h2 {
+                font-size: 1.6em;
+            }
+
+            .form-container input[type="text"],
+            .form-container input[type="date"],
+            .form-container textarea,
+            .form-container select {
+                font-size: 0.9em;
+            }
+
+            .form-container button {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
@@ -71,7 +116,6 @@
         <h2>Client Inquiry Form</h2>
         <form action="/save-inquiry" method="POST">
             <div class="form-section">
-                <h3>Client Information</h3>
                 <label for="client-name">Client Name:</label>
                 <input type="text" id="client-name" name="client-name" required>
 
@@ -80,7 +124,6 @@
             </div>
             
             <div class="form-section">
-                <h3>Booking Details</h3>
                 <label for="client-inquiry">Client Inquiry:</label>
                 <textarea id="client-inquiry" name="client-inquiry" required></textarea>
 
@@ -92,7 +135,6 @@
             </div>
 
             <div class="form-section">
-                <h3>Follow-up</h3>
                 <label for="date-called">Date Client Was Called:</label>
                 <input type="date" id="date-called" name="date-called">
 
@@ -101,7 +143,6 @@
             </div>
 
             <div class="form-section">
-                <h3>Conversion</h3>
                 <label for="conversion">Conversion (Booked or Not):</label>
                 <select id="conversion" name="conversion" required>
                     <option value="Booked">Booked</option>
