@@ -47,4 +47,35 @@ def save_inquiry():
     pdf.cell(200, 10, txt="Client Inquiry", ln=True, align='C')
     pdf.ln(10)
     pdf.cell(200, 10, txt=f"Client Name: {client_name}", ln=True)
-    pdf.cell(200, 10, txt=f"
+    pdf.cell(200, 10, txt=f"Phone Number: {phone_number}", ln=True)
+    pdf.cell(200, 10, txt=f"Client Inquiry: {client_inquiry}", ln=True)
+    pdf.cell(200, 10, txt=f"Booking Date: {booking_date}", ln=True)
+    pdf.cell(200, 10, txt=f"Client Resolution: {client_resolution}", ln=True)
+    pdf.cell(200, 10, txt=f"Date Client Was Called: {date_called}", ln=True)
+    pdf.cell(200, 10, txt=f"Client Feedback: {client_feedback}", ln=True)
+    pdf.cell(200, 10, txt=f"Conversion: {conversion}", ln=True)
+    pdf.output(PDF_FILE_PATH)
+
+    return jsonify({"success": True})
+
+# Route to download files
+@app.route('/download-files')
+def download_files():
+    return f"""
+    <h3>Download Files</h3>
+    <ul>
+        <li><a href="/download-word">Download Word File</a></li>
+        <li><a href="/download-pdf">Download PDF File</a></li>
+    </ul>
+    """
+
+@app.route('/download-word')
+def download_word():
+    return send_file(WORD_FILE_PATH, as_attachment=True)
+
+@app.route('/download-pdf')
+def download_pdf():
+    return send_file(PDF_FILE_PATH, as_attachment=True)
+
+if __name__ == '__main__':
+    app.run(debug=True)
