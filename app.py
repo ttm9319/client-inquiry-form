@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template_string
 from fpdf import FPDF
 from docx import Document
 import os
@@ -9,37 +9,15 @@ app = Flask(__name__)
 WORD_FILE_PATH = "client_inquiry.docx"
 PDF_FILE_PATH = "client_inquiry.pdf"
 
-# Home route to display the form
+# Load the HTML form from the file directly in the same directory
+def load_form_html():
+    with open("index.html", "r") as file:
+        return file.read()
+
+# Route to display the form
 @app.route('/')
 def form():
-    return """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Client Inquiry Form</title>
-    </head>
-    <body>
-        <form action="/save-inquiry" method="POST">
-            <label for="client-name">Client Name:</label>
-            <input type="text" id="client-name" name="client-name" required><br>
-            <label for="phone-number">Phone Number:</label>
-            <input type="text" id="phone-number" name="phone-number" required><br>
-            <label for="client-inquiry">Client Inquiry:</label>
-            <textarea id="client-inquiry" name="client-inquiry" required></textarea><br>
-            <label for="booking-date">Booking Date:</label>
-            <input type="date" id="booking-date" name="booking-date" required><br>
-            <label for="conversion">Conversion (Booked or Not):</label>
-            <select id="conversion" name="conversion" required>
-                <option value="Booked">Booked</option>
-                <option value="Not Booked">Not Booked</option>
-            </select><br>
-            <button type="submit">Submit Inquiry</button>
-        </form>
-    </body>
-    </html>
-    """
+    return render_template_string(load_form_html())
 
 # Route to handle form submission and save inquiry data
 @app.route('/save-inquiry', methods=['POST'])
