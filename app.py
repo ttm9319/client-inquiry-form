@@ -84,18 +84,14 @@ def save_inquiry():
     flash('Inquiry submitted successfully!', 'success')
     return redirect(url_for('inquiries'))
 
-# Route to display inquiries in descending order
 @app.route('/inquiries')
 def inquiries():
     with Session() as session:
         inquiries = session.query(Inquiry).order_by(Inquiry.created_at.desc()).all()
-        output = "<h1>All Inquiries</h1><ul>"
-        for inquiry in inquiries:
-            output += f"<li>Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}... " \
-                      f"<a href='/download-pdf/{inquiry.id}'>Download PDF</a> | " \
-                      f"<a href='/download-docx/{inquiry.id}'>Download DOCX</a></li>"
-        output += "</ul><br><a href='/'>Submit Another Inquiry</a>"
-    return output
+        
+        # Render inquiries in an HTML page and link the styles.css
+        return render_template('inquiries.html', inquiries=inquiries)
+
 
 # Route to generate PDF for a specific inquiry
 @app.route('/download-pdf/<int:inquiry_id>')
