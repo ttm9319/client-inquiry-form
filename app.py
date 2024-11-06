@@ -113,7 +113,8 @@ def download_pdf():
         
         # Add inquiries to the PDF
         for inquiry in inquiries:
-            c.drawString(30, y_position, f"Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}...")
+            text = f"Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}..."
+            c.drawString(30, y_position, text)
             y_position -= 15
             if y_position < 50:  # Start a new page if the content exceeds the page length
                 c.showPage()
