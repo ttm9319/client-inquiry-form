@@ -32,9 +32,9 @@ body {
 }
 
 /* Form container styling */
-.form-container {
+.form-container, .container {
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     background-color: #fff;
     padding: 30px;
@@ -42,12 +42,21 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+/* Header and h1, h2 styling */
+h1, h2 {
     text-align: center;
     font-size: 2rem;
     color: #4a4a4a;
     margin-bottom: 20px;
     font-weight: 600;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.75rem;
 }
 
 /* Form section styling */
@@ -63,6 +72,7 @@ label {
     display: block;
 }
 
+/* Input and textarea styling */
 input[type="text"],
 input[type="date"],
 textarea,
@@ -93,6 +103,7 @@ textarea {
     min-height: 120px;
 }
 
+/* Button styling */
 button[type="submit"] {
     background-color: #007bff;
     color: #fff;
@@ -109,17 +120,69 @@ button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
+/* List and link styling */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+li div {
+    margin-bottom: 10px;
+}
+
+strong {
+    color: #007bff;
+    font-size: 1.1rem;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+footer a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
 /* Responsive design for mobile */
 @media (max-width: 768px) {
     body {
         padding: 20px;
     }
 
-    .form-container {
+    .form-container, .container {
         padding: 20px;
     }
 
-    h2 {
+    h1, h2 {
         font-size: 1.75rem;
     }
 
@@ -129,5 +192,9 @@ button[type="submit"]:hover {
 
     button[type="submit"] {
         font-size: 1rem;
+    }
+
+    li {
+        padding: 12px;
     }
 }
