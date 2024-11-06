@@ -10,11 +10,15 @@ import os
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# Ensure the database URL is available
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
+
 # Initialize Flask app
 app = Flask(__name__)
 
-# Database setup
-engine = create_engine(DATABASE_URL)
+# Database setup with SSL if necessary
+engine = create_engine(DATABASE_URL, connect_args={"sslmode": "require"})
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 
