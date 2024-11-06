@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template, send_file, redirect, url_for, flash
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -20,6 +20,7 @@ if not DATABASE_URL:
 
 # Initialize Flask app
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", "your_secret_key")  # You need a secret key for flash messages
 
 # Database setup with SSL if necessary
 engine = create_engine(DATABASE_URL, connect_args={"sslmode": "require"})
@@ -79,7 +80,9 @@ def save_inquiry():
         session.add(new_inquiry)
         session.commit()
 
-    return render_template("index.html")
+    # Flash a success message and redirect to the inquiries page
+    flash('Inquiry submitted successfully!', 'success')
+    return redirect(url_for('inquiries'))
 
 # Route to display inquiries in descending order
 @app.route('/inquiries')
