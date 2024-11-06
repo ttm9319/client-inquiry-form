@@ -1,9 +1,13 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_file
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 from datetime import datetime
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from docx import Document
 import os
 
 # Load environment variables from .env file
@@ -75,11 +79,7 @@ def save_inquiry():
         session.add(new_inquiry)
         session.commit()
 
-    return '''
-    <h3>Inquiry Submitted Successfully!</h3>
-    <a href="/inquiries">View All Inquiries</a><br>
-    <a href="/">Submit Another Inquiry</a>
-    '''
+    return render_template("index.html")
 
 # Route to display inquiries in descending order
 @app.route('/inquiries')
@@ -91,6 +91,58 @@ def inquiries():
             output += f"<li>Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}...</li>"
         output += "</ul><br><a href='/'>Submit Another Inquiry</a>"
     return output
+
+# Route to generate PDF for all inquiries
+@app.route('/download-pdf')
+def download_pdf():
+    with Session() as session:
+        inquiries = session.query(Inquiry).order_by(Inquiry.created_at.desc()).all()
+        
+        # Create a PDF in memory
+        pdf_buffer = BytesIO()
+        c = canvas.Canvas(pdf_buffer, pagesize=letter)
+        c.setFont("Helvetica", 12)
+        y_position = 750
+        
+        # Add title
+        c.drawString(200, y_position, "Inquiries Report")
+        y_position -= 20
+        
+        # Add inquiries to the PDF
+        for inquiry in inquiries:
+            c.drawString(30, y_position, f"Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}...")
+            y_position -= 15
+            if y_position < 50:  # Start a new page if the content exceeds the page length
+                c.showPage()
+                y_position = 750
+        
+        c.save()
+
+        # Return the PDF file
+        pdf_buffer.seek(0)
+        return send_file(pdf_buffer, as_attachment=True, download_name="inquiries_report.pdf", mimetype="application/pdf")
+
+# Route to generate Word file for all inquiries
+@app.route('/download-docx')
+def download_docx():
+    with Session() as session:
+        inquiries = session.query(Inquiry).order_by(Inquiry.created_at.desc()).all()
+        
+        # Create a Word document in memory
+        doc = Document()
+        doc.add_heading('Inquiries Report', 0)
+        
+        # Add inquiries to the Word document
+        for inquiry in inquiries:
+            doc.add_paragraph(f"Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}...")
+        
+        # Save the Word document to a BytesIO buffer
+        doc_buffer = BytesIO()
+        doc.save(doc_buffer)
+        doc_buffer.seek(0)
+
+        # Return the Word file
+        return send_file(doc_buffer, as_attachment=True, download_name="inquiries_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 # Run the app
 if __name__ == '__main__':
