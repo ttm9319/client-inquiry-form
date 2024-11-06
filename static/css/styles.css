@@ -21,6 +21,19 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers form or content horizontally */
+}
+
+/* Form styles */
+form {
+    width: 100%;
+    max-width: 600px; /* Adjust max width to your preference */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Heading */
