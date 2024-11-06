@@ -8,7 +8,7 @@
         /* Global styles */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f2f4f7;
+            background-color: #e9ecef;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,20 +19,21 @@
         /* Form container */
         .form-container {
             background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             max-width: 600px;
-            width: 90%;
+            width: 100%;
             transition: all 0.3s ease;
         }
 
         /* Header */
         .form-container h2 {
-            color: #2196F3;
+            color: #2c3e50;
             text-align: center;
-            font-size: 1.8em;
+            font-size: 2em;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         /* Form Section */
@@ -42,9 +43,9 @@
 
         /* Labels and inputs */
         .form-container label {
-            font-weight: bold;
+            font-weight: 600;
             margin-top: 10px;
-            color: #2196F3;
+            color: #495057;
             display: block;
         }
 
@@ -55,8 +56,8 @@
             width: 100%;
             padding: 12px;
             margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
             font-size: 1em;
             transition: border-color 0.3s ease;
         }
@@ -65,33 +66,33 @@
         .form-container input[type="date"]:focus,
         .form-container textarea:focus,
         .form-container select:focus {
-            border-color: #2196F3;
+            border-color: #2c3e50;
             outline: none;
         }
 
         /* Submit button */
         .form-container button {
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: white;
             padding: 14px;
             width: 100%;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 1.2em;
             cursor: pointer;
+            font-weight: bold;
             margin-top: 20px;
             transition: background-color 0.3s ease;
         }
 
         .form-container button:hover {
-            background-color: #45a049;
+            background-color: #2980b9;
         }
 
         /* Responsive Design */
         @media screen and (max-width: 600px) {
             .form-container {
                 padding: 20px;
-                max-width: 90%;
             }
 
             .form-container h2 {
@@ -113,7 +114,7 @@
 </head>
 <body>
     <div class="form-container">
-      <br/>  <h2>Client Inquiry Form</h2>
+        <h2>Client Inquiry Form</h2>
         <form action="/save-inquiry" method="POST">
             <div class="form-section">
                 <label for="client-name">Client Name:</label>
