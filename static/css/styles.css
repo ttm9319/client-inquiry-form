@@ -5,126 +5,129 @@
     box-sizing: border-box;
 }
 
+/* Body styling */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
     color: #333;
-    padding: 20px;
+    padding: 40px;
 }
 
-/* Container for the content */
-.container {
+/* Flash message styling */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    background-color: #dff0d8;  /* Green for success */
+    color: #3c763d;
+}
+
+.flash-message.error {
+    background-color: #f2dede; /* Red for errors */
+    color: #a94442;
+}
+
+/* Form container styling */
+.form-container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers form or content horizontally */
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Form styles */
-form {
-    width: 100%;
-    max-width: 600px; /* Adjust max width to your preference */
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Heading */
-h1 {
+h2 {
     text-align: center;
     font-size: 2rem;
     color: #4a4a4a;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
-/* Inquiry list */
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+/* Form section styling */
+.form-section {
+    margin-bottom: 20px;
 }
 
-li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ffffff;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
+label {
+    font-size: 1.1rem;
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
 }
 
-li:hover {
-    background-color: #f1f1f1;
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
 }
 
-li div {
-    flex: 1;
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
-li a {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-    padding: 8px 16px;
-    border: 2px solid #007bff;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
-li a:hover {
+button[type="submit"] {
     background-color: #007bff;
     color: #fff;
-    border-color: #007bff;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
 
-/* Footer section */
-footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 14px;
-    color: #777;
-}
-
-footer a {
-    color: #007bff;
-}
-
-footer a:hover {
-    text-decoration: underline;
+button[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
 /* Responsive design for mobile */
 @media (max-width: 768px) {
     body {
-        padding: 10px;
+        padding: 20px;
     }
 
-    h1 {
-        font-size: 1.5rem;
+    .form-container {
+        padding: 20px;
     }
 
-    .container {
-        padding: 15px;
+    h2 {
+        font-size: 1.75rem;
     }
 
-    li {
-        flex-direction: column;
-        align-items: flex-start;
+    .form-section {
+        margin-bottom: 15px;
     }
 
-    li a {
-        margin-top: 10px;
-        width: 100%;
-        text-align: center;
+    button[type="submit"] {
+        font-size: 1rem;
     }
 }
