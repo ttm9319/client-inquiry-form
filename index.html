@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Inquiries</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        h1, h2 {
+            color: #0066cc;
+        }
+        label {
+            display: block;
+            margin: 8px 0 4px;
+            font-weight: bold;
+            color: #00509e;
+        }
+        input, textarea, button {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #00509e;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background-color: #0073e6;
+            color: white;
+            padding: 10px;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) td {
+            background-color: #e6f2ff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Client Inquiry Form</h1>
+
+    <form id="inquiryForm">
+        <label for="clientName">Client Name:</label>
+        <input type="text" id="clientName" required>
+
+        <label for="phoneNo">Phone Number:</label>
+        <input type="text" id="phoneNo" required>
+
+        <label for="clientInquiry">Client Inquiry:</label>
+        <textarea id="clientInquiry" rows="3" required></textarea>
+
+        <label for="bookingDate">Booking Date:</label>
+        <input type="date" id="bookingDate" required>
+
+        <label for="clientResolution">Client Resolution:</label>
+        <textarea id="clientResolution" rows="3"></textarea>
+
+        <label for="callDate">Date Client Was Called:</label>
+        <input type="date" id="callDate">
+
+        <label for="clientFeedback">Client Feedback:</label>
+        <textarea id="clientFeedback" rows="3"></textarea>
+
+        <label for="conversionStatus">Conversion (Booked or Not):</label>
+        <input type="text" id="conversionStatus" placeholder="Booked / Not Booked">
+
+        <button type="button" onclick="addInquiry()">Add Inquiry</button>
+    </form>
+
+    <h2>Client Inquiries</h2>
+    <table id="inquiryTable">
+        <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Phone Number</th>
+                <th>Inquiry</th>
+                <th>Booking Date</th>
+                <th>Client Resolution</th>
+                <th>Date Called</th>
+                <th>Client Feedback</th>
+                <th>Conversion Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <button onclick="generatePDF()">Generate PDF</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        const inquiryData = [];
+
+        function addInquiry() {
+            const clientName = document.getElementById("clientName").value;
+            const phoneNo = document.getElementById("phoneNo").value;
+            const clientInquiry = document.getElementById("clientInquiry").value;
+            const bookingDate = document.getElementById("bookingDate").value;
+            const clientResolution = document.getElementById("clientResolution").value;
+            const callDate = document.getElementById("callDate").value;
+            const clientFeedback = document.getElementById("clientFeedback").value;
+            const conversionStatus = document.getElementById("conversionStatus").value;
+
+            inquiryData.push({ clientName, phoneNo, clientInquiry, bookingDate, clientResolution, callDate, clientFeedback, conversionStatus });
+            updateTable();
+            document.getElementById("inquiryForm").reset();
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById("inquiryTable").querySelector("tbody");
+            tableBody.innerHTML = "";
+
+            inquiryData.forEach((inquiry, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${inquiry.clientName}</td>
+                    <td>${inquiry.phoneNo}</td>
+                    <td>${inquiry.clientInquiry}</td>
+                    <td>${inquiry.bookingDate}</td>
+                    <td>${inquiry.clientResolution}</td>
+                    <td>${inquiry.callDate}</td>
+                    <td>${inquiry.clientFeedback}</td>
+                    <td>${inquiry.conversionStatus}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(18);
+            doc.text("Client Inquiries Report", 10, 10);
+            doc.setFontSize(12);
+
+            let yOffset = 20;
+            inquiryData.forEach((inquiry, index) => {
+                doc.text(Client Name: ${inquiry.clientName}, 10, yOffset);
+                doc.text(Phone Number: ${inquiry.phoneNo}, 10, yOffset + 6);
+                doc.text(Inquiry: ${inquiry.clientInquiry}, 10, yOffset + 12);
+                doc.text(Booking Date: ${inquiry.bookingDate}, 10, yOffset + 18);
+                doc.text(Client Resolution: ${inquiry.clientResolution}, 10, yOffset + 24);
+                doc.text(Date Called: ${inquiry.callDate}, 10, yOffset + 30);
+                doc.text(Client Feedback: ${inquiry.clientFeedback}, 10, yOffset + 36);
+                doc.text(Conversion Status: ${inquiry.conversionStatus}, 10, yOffset + 42);
+                yOffset += 50;
+            });
+
+            doc.save("Client_Inquiries_Report.pdf");
+        }
+    </script>
+
+</body>
+</html>
