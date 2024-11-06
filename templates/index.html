@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Inquiry Form</title>
-    <!-- Link to the local CSS file in the static folder using Flask's url_for -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Use a relative path to the static directory -->
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <div class="form-container">
@@ -14,60 +14,27 @@
         <form action="/save-inquiry" method="POST">
             <div class="form-section">
                 <label for="client-name">Client Name:</label>
-                <input 
-                    type="text" 
-                    id="client-name" 
-                    name="client-name" 
-                    aria-label="Enter client's full name" 
-                    required>
+                <input type="text" id="client-name" name="client-name" aria-label="Enter client's full name" required>
                 <label for="phone-number">Phone Number:</label>
-                <input 
-                    type="text" 
-                    id="phone-number" 
-                    name="phone-number" 
-                    aria-label="Enter client's phone number" 
-                    required>
+                <input type="text" id="phone-number" name="phone-number" aria-label="Enter client's phone number" required>
             </div>
             <div class="form-section">
                 <label for="client-inquiry">Client Inquiry:</label>
-                <textarea 
-                    id="client-inquiry" 
-                    name="client-inquiry" 
-                    aria-label="Describe client's inquiry" 
-                    required></textarea>
+                <textarea id="client-inquiry" name="client-inquiry" aria-label="Describe client's inquiry" required></textarea>
                 <label for="booking-date">Booking Date:</label>
-                <input 
-                    type="date" 
-                    id="booking-date" 
-                    name="booking-date" 
-                    aria-label="Select booking date" 
-                    required>
+                <input type="date" id="booking-date" name="booking-date" aria-label="Select booking date" required>
                 <label for="resolution">Resolution:</label>
-                <textarea 
-                    id="resolution" 
-                    name="resolution" 
-                    aria-label="Describe resolution or follow-up actions"></textarea>
+                <textarea id="resolution" name="resolution" aria-label="Describe resolution or follow-up actions"></textarea>
             </div>
             <div class="form-section">
                 <label for="date-called">Date Client Was Called:</label>
-                <input 
-                    type="date" 
-                    id="date-called" 
-                    name="date-called" 
-                    aria-label="Select date client was called">
-                <label for="client-feedback">Client Feedback:</label> 
-                <textarea 
-                    id="client-feedback" 
-                    name="client-feedback" 
-                    aria-label="Provide client feedback or comments"></textarea>
+                <input type="date" id="date-called" name="date-called" aria-label="Select date client was called">
+                <label for="client-feedback">Client Feedback:</label>
+                <textarea id="client-feedback" name="client-feedback" aria-label="Provide client feedback or comments"></textarea>
             </div>
             <div class="form-section">
                 <label for="conversion">Conversion (Booked or Not):</label>
-                <select 
-                    id="conversion" 
-                    name="conversion" 
-                    aria-label="Select conversion status" 
-                    required>
+                <select id="conversion" name="conversion" aria-label="Select conversion status" required>
                     <option value="Booked">Booked</option>
                     <option value="Not Booked">Not Booked</option>
                 </select>
