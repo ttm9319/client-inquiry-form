@@ -6,52 +6,77 @@
     <title>Client Inquiry Form</title>
     <style>
         /* Global styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e9ecef;
-            margin: 0;
-            padding: 0;
-            display: grid;
-            place-items: center;
-            height: 100vh;
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --background-color: #f1f5f9;
+            --text-color: #1e293b;
+            --border-color: #cbd5e1;
+            --input-background: #ffffff;
+            --success-color: #059669;
         }
 
-        /* Box Model Reset */
-        * {
-            box-sizing: border-box;
+        body {
+            font-family: 'Inter', 'Arial', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            color: var(--text-color);
         }
 
         /* Form container */
         .form-container {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-            max-width: 600px;
+            background-color: var(--input-background);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            max-width: 700px;
             width: 100%;
             transition: all 0.3s ease;
         }
 
         /* Header */
         .form-container h2 {
-            color: #2c3e50;
+            color: var(--text-color);
             text-align: center;
-            font-size: 2em;
-            margin-bottom: 20px;
-            font-weight: 600;
+            font-size: 1.875rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .form-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
         }
 
         /* Form Section */
         .form-section {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
 
         /* Labels and inputs */
         .form-container label {
             font-weight: 600;
-            margin-top: 10px;
-            color: #495057;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
             display: block;
+            font-size: 0.875rem;
         }
 
         .form-container input[type="text"],
@@ -59,60 +84,85 @@
         .form-container textarea,
         .form-container select {
             width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--input-background);
         }
 
         .form-container input[type="text"]:focus,
         .form-container input[type="date"]:focus,
         .form-container textarea:focus,
         .form-container select:focus {
-            border-color: #2c3e50;
+            border-color: var(--primary-color);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-container textarea {
+            min-height: 100px;
+            resize: vertical;
         }
 
         /* Submit button */
         .form-container button {
-            background-color: #3498db;
+            background-color: var(--primary-color);
             color: white;
-            padding: 14px;
+            padding: 1rem 1.5rem;
             width: 100%;
             border: none;
-            border-radius: 6px;
-            font-size: 1.2em;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .form-container button:hover {
-            background-color: #2980b9;
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container button:active {
+            transform: translateY(0);
+        }
+
+        /* Select styling */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
         }
 
         /* Responsive Design */
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 640px) {
             .form-container {
-                padding: 20px;
+                padding: 1.5rem;
+            }
+
+            .form-section {
+                padding: 0.75rem;
             }
 
             .form-container h2 {
-                font-size: 1.6em;
+                font-size: 1.5rem;
             }
 
             .form-container input[type="text"],
             .form-container input[type="date"],
             .form-container textarea,
             .form-container select {
-                font-size: 0.9em;
-            }
-
-            .form-container button {
-                font-size: 1em;
+                font-size: 0.875rem;
             }
         }
     </style>
