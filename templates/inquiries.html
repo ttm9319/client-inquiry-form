@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Inquiries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>All Inquiries</h1>
+        <ul>
+            {% for inquiry in inquiries %}
+                <li>
+                    <div>
+                        <strong>Inquiry #{{ inquiry.id }}</strong>: {{ inquiry.client_name }} - {{ inquiry.client_inquiry[:50] }}...
+                    </div>
+                    <div>
+                        <a href="{{ url_for('download_pdf', inquiry_id=inquiry.id) }}">Download PDF</a> | 
+                        <a href="{{ url_for('download_docx', inquiry_id=inquiry.id) }}">Download DOCX</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <footer>
+            <p><a href="/">Submit Another Inquiry</a></p>
+        </footer>
+    </div>
+</body>
+</html>
