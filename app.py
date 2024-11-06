@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -25,9 +25,9 @@ class Inquiry(Base):
     client_name = Column(String(100))
     phone_number = Column(String(20))
     client_inquiry = Column(Text)
-    booking_date = Column(String(20))
+    booking_date = Column(DateTime)
     resolution = Column(Text)
-    date_called = Column(String(20))
+    date_called = Column(DateTime)
     feedback = Column(Text)
     conversion = Column(String(20))
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -41,19 +41,7 @@ def create_db():
 # Route to display the form
 @app.route('/')
 def form():
-    return '''
-    <form action="/save-inquiry" method="post">
-        <label>Client Name: <input type="text" name="client-name"></label><br>
-        <label>Phone Number: <input type="text" name="phone-number"></label><br>
-        <label>Inquiry: <textarea name="client-inquiry"></textarea></label><br>
-        <label>Booking Date: <input type="text" name="booking-date"></label><br>
-        <label>Resolution: <input type="text" name="resolution"></label><br>
-        <label>Date Called: <input type="text" name="date-called"></label><br>
-        <label>Feedback: <textarea name="client-feedback"></textarea></label><br>
-        <label>Conversion: <input type="text" name="conversion"></label><br>
-        <button type="submit">Submit Inquiry</button>
-    </form>
-    '''
+    return render_template("index.html")
 
 # Route to handle form submission and save inquiry
 @app.route('/save-inquiry', methods=['POST'])
@@ -62,27 +50,27 @@ def save_inquiry():
     client_name = request.form['client-name']
     phone_number = request.form['phone-number']
     client_inquiry = request.form['client-inquiry']
-    booking_date = request.form['booking-date']
+    booking_date = datetime.strptime(request.form['booking-date'], '%Y-%m-%d')  # Convert to datetime
     resolution = request.form['resolution']
-    date_called = request.form['date-called']
+    date_called = datetime.strptime(request.form['date-called'], '%Y-%m-%d') if request.form['date-called'] else None  # Convert to datetime
     feedback = request.form['client-feedback']
     conversion = request.form['conversion']
     
-    # Save to database
-    session = Session()
-    new_inquiry = Inquiry(
-        client_name=client_name,
-        phone_number=phone_number,
-        client_inquiry=client_inquiry,
-        booking_date=booking_date,
-        resolution=resolution,
-        date_called=date_called,
-        feedback=feedback,
-        conversion=conversion
-    )
-    session.add(new_inquiry)
-    session.commit()
-    
+    # Use context manager for session handling
+    with Session() as session:
+        new_inquiry = Inquiry(
+            client_name=client_name,
+            phone_number=phone_number,
+            client_inquiry=client_inquiry,
+            booking_date=booking_date,
+            resolution=resolution,
+            date_called=date_called,
+            feedback=feedback,
+            conversion=conversion
+        )
+        session.add(new_inquiry)
+        session.commit()
+
     return '''
     <h3>Inquiry Submitted Successfully!</h3>
     <a href="/inquiries">View All Inquiries</a><br>
@@ -92,12 +80,12 @@ def save_inquiry():
 # Route to display inquiries in descending order
 @app.route('/inquiries')
 def inquiries():
-    session = Session()
-    inquiries = session.query(Inquiry).order_by(Inquiry.created_at.desc()).all()
-    output = "<h1>All Inquiries</h1><ul>"
-    for inquiry in inquiries:
-        output += f"<li>Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}...</li>"
-    output += "</ul><br><a href='/'>Submit Another Inquiry</a>"
+    with Session() as session:
+        inquiries = session.query(Inquiry).order_by(Inquiry.created_at.desc()).all()
+        output = "<h1>All Inquiries</h1><ul>"
+        for inquiry in inquiries:
+            output += f"<li>Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}...</li>"
+        output += "</ul><br><a href='/'>Submit Another Inquiry</a>"
     return output
 
 # Run the app
