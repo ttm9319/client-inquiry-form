@@ -91,15 +91,21 @@ def inquiries():
         inquiries = session.query(Inquiry).order_by(Inquiry.created_at.desc()).all()
         output = "<h1>All Inquiries</h1><ul>"
         for inquiry in inquiries:
-            output += f"<li>Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}...</li>"
+            output += f"<li>Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}... " \
+                      f"<a href='/download-pdf/{inquiry.id}'>Download PDF</a> | " \
+                      f"<a href='/download-docx/{inquiry.id}'>Download DOCX</a></li>"
         output += "</ul><br><a href='/'>Submit Another Inquiry</a>"
     return output
 
-# Route to generate PDF for all inquiries
-@app.route('/download-pdf')
-def download_pdf():
+# Route to generate PDF for a specific inquiry
+@app.route('/download-pdf/<int:inquiry_id>')
+def download_pdf(inquiry_id):
     with Session() as session:
-        inquiries = session.query(Inquiry).order_by(Inquiry.created_at.desc()).all()
+        inquiry = session.query(Inquiry).filter(Inquiry.id == inquiry_id).first()
+        
+        # Check if the inquiry exists
+        if not inquiry:
+            return "Inquiry not found", 404
         
         # Create a PDF in memory
         pdf_buffer = BytesIO()
@@ -108,37 +114,47 @@ def download_pdf():
         y_position = 750
         
         # Add title
-        c.drawString(200, y_position, "Inquiries Report")
+        c.drawString(200, y_position, f"Inquiry #{inquiry.id} - {inquiry.client_name}")
         y_position -= 20
         
-        # Add inquiries to the PDF
-        for inquiry in inquiries:
-            text = f"Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}..."
-            c.drawString(30, y_position, text)
-            y_position -= 15
-            if y_position < 50:  # Start a new page if the content exceeds the page length
-                c.showPage()
-                y_position = 750
+        # Add inquiry details to the PDF
+        c.drawString(30, y_position, f"Client Name: {inquiry.client_name}")
+        y_position -= 15
+        c.drawString(30, y_position, f"Phone Number: {inquiry.phone_number}")
+        y_position -= 15
+        c.drawString(30, y_position, f"Inquiry: {inquiry.client_inquiry}")
+        y_position -= 15
+        c.drawString(30, y_position, f"Booking Date: {inquiry.booking_date}")
+        y_position -= 15
+        c.drawString(30, y_position, f"Resolution: {inquiry.resolution}")
         
+        # Finalize the PDF
         c.save()
 
         # Return the PDF file
         pdf_buffer.seek(0)
-        return send_file(pdf_buffer, as_attachment=True, download_name="inquiries_report.pdf", mimetype="application/pdf")
+        return send_file(pdf_buffer, as_attachment=True, download_name=f"inquiry_{inquiry.id}.pdf", mimetype="application/pdf")
 
-# Route to generate Word file for all inquiries
-@app.route('/download-docx')
-def download_docx():
+# Route to generate Word file for a specific inquiry
+@app.route('/download-docx/<int:inquiry_id>')
+def download_docx(inquiry_id):
     with Session() as session:
-        inquiries = session.query(Inquiry).order_by(Inquiry.created_at.desc()).all()
+        inquiry = session.query(Inquiry).filter(Inquiry.id == inquiry_id).first()
+        
+        # Check if the inquiry exists
+        if not inquiry:
+            return "Inquiry not found", 404
         
         # Create a Word document in memory
         doc = Document()
-        doc.add_heading('Inquiries Report', 0)
+        doc.add_heading(f"Inquiry #{inquiry.id} - {inquiry.client_name}", 0)
         
-        # Add inquiries to the Word document
-        for inquiry in inquiries:
-            doc.add_paragraph(f"Inquiry #{inquiry.id}: {inquiry.client_name} - {inquiry.client_inquiry[:50]}...")
+        # Add inquiry details to the Word document
+        doc.add_paragraph(f"Client Name: {inquiry.client_name}")
+        doc.add_paragraph(f"Phone Number: {inquiry.phone_number}")
+        doc.add_paragraph(f"Inquiry: {inquiry.client_inquiry}")
+        doc.add_paragraph(f"Booking Date: {inquiry.booking_date}")
+        doc.add_paragraph(f"Resolution: {inquiry.resolution}")
         
         # Save the Word document to a BytesIO buffer
         doc_buffer = BytesIO()
@@ -146,7 +162,7 @@ def download_docx():
         doc_buffer.seek(0)
 
         # Return the Word file
-        return send_file(doc_buffer, as_attachment=True, download_name="inquiries_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        return send_file(doc_buffer, as_attachment=True, download_name=f"inquiry_{inquiry.id}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 # Run the app
 if __name__ == '__main__':
